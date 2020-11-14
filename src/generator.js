@@ -18,13 +18,13 @@ class Generator {
     this.ctx = {};  
   }
 
-  source(src) {
-    this.source = join(this.dirname, src);
+  source(src = '') {
+    this._source = join(this.dirname, src);
     return this;
   }
 
-  templates(templates) {
-    this.templates = join(this.dirname, templates);
+  templates(templates = '') {
+    this._templates = join(this.dirname, templates);
     return this;
   }
 
@@ -39,7 +39,7 @@ class Generator {
   }
 
   async _readFiles() {
-    this.files = await readdir(this.source);
+    this.files = await readdir(this._source);
   
     const markdownFiles = this.files.filter((file) => {
       return /.md$/.test(file)
@@ -48,7 +48,7 @@ class Generator {
     for (const file of markdownFiles) {
       const content = readFileSync(file, 'utf-8');
       const data = matter(content);
-      const fileName = relative(this.source, file);
+      const fileName = relative(this._source, file);
       this.ctx[fileName] = data;
     }
   }
@@ -56,7 +56,7 @@ class Generator {
   async _compileFiles() {
     for (const file in this.ctx) {
       const props = this.ctx[file];
-      const template = join(this.templates, props.data.layout || 'layout.njk');
+      const template = join(this._templates, props.data.layout || 'layout.njk');
       const data = merge(props.data, {
         content: remark().use(html).processSync(props.content)
       });
