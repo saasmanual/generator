@@ -1,0 +1,40 @@
+{
+  "name": "@saasmanual/generator",
+  "version": "0.0.1",
+  "description": "Site generator for SaaS Manual",
+  "main": "bin/cli.js",
+  "scripts": {
+    "test": "tape --require esm src/**/*.test.js | tap-spec",
+    "coverage": "nyc npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saasmanual/generator.git"
+  },
+  "keywords": [
+    "site",
+    "generator",
+    "saas",
+    "manual"
+  ],
+  "author": "Nikolai Onken",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/saasmanual/generator/issues"
+  },
+  "homepage": "https://github.com/saasmanual/generator#readme",
+  "dependencies": {
+    "esm": "^3.2.25",
+    "gray-matter": "^4.0.2",
+    "lodash.merge": "^4.6.2",
+    "nunjucks": "^3.2.2",
+    "recursive-readdir": "^2.2.2",
+    "remark": "^13.0.0",
+    "remark-html": "^13.0.1"
+  },
+  "devDependencies": {
+    "nyc": "^15.1.0",
+    "tap-spec": "^5.0.0",
+    "tape": "^5.0.1"
+  }
+}
