@@ -28,12 +28,16 @@ class Generator {
     return this;
   }
 
-  destination(destination) {
-    this.destination = join(this.dirname, destination);
+  destination(destination = '') {
+    this._destination = join(this.dirname, destination);
     return this;
   }
 
   use(plugin) {
+    if (typeof plugin !== 'function') {
+      throw new Error('Please provide a function as the parameter to `use`.');
+    }
+    
     this.plugins.push(plugin.bind(this));
     return this;
   }
@@ -67,11 +71,11 @@ class Generator {
 
   async _writeToDisk() {
     for (const file in this.ctx) {
-      const path = dirname(join(this.destination, file));
+      const path = dirname(join(this._destination, file));
       if (!existsSync(path)) {
         mkdirSync(path, { recursive: true });
       }
-      const out = join(this.destination, dirname(file), renameFromMdToHtml(file));
+      const out = join(this._destination, dirname(file), renameFromMdToHtml(file));
       writeFileSync(out, this.ctx[file].html);
     }
     return this;

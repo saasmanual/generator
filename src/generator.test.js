@@ -34,3 +34,27 @@ test('templates sets _templates properties', async (t) => {
   generator.templates();
   t.equal(generator._templates, 'foo');
 });
+
+test('destination sets _destination properties', async (t) => {
+  t.plan(2);
+
+  const generator = new Generator('foo');
+
+  generator.destination('bar');
+  t.equal(generator._destination, 'foo/bar');
+
+  generator.destination();
+  t.equal(generator._destination, 'foo');
+});
+
+test('plugin checks if parameter is function', async (t) => {
+  t.plan(1);
+
+  const generator = new Generator('foo');
+
+  try {
+    generator.use('bar');
+  } catch(e) {
+    t.equal(e.message, 'Please provide a function as the parameter to `use`.')
+  }
+});
