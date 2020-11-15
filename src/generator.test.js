@@ -23,6 +23,15 @@ test('source sets _source properties', async (t) => {
   t.equal(generator._source, 'foo');
 });
 
+test('source returns class instance', async (t) => {
+  t.plan(1);
+
+  const generator = new Generator('foo');
+
+  const scope = generator.source('bar');
+  t.equal(scope, generator);
+});
+
 test('templates sets _templates properties', async (t) => {
   t.plan(2);
 
@@ -33,6 +42,15 @@ test('templates sets _templates properties', async (t) => {
 
   generator.templates();
   t.equal(generator._templates, 'foo');
+});
+
+test('templates returns class instance', async (t) => {
+  t.plan(1);
+
+  const generator = new Generator('foo');
+
+  const scope = generator.templates('bar');
+  t.equal(scope, generator);
 });
 
 test('destination sets _destination properties', async (t) => {
@@ -47,7 +65,16 @@ test('destination sets _destination properties', async (t) => {
   t.equal(generator._destination, 'foo');
 });
 
-test('plugin checks if parameter is function', async (t) => {
+test('destination returns class instance', async (t) => {
+  t.plan(1);
+
+  const generator = new Generator('foo');
+
+  const scope = generator.destination('bar');
+  t.equal(scope, generator);
+});
+
+test('use checks if parameter is function', async (t) => {
   t.plan(1);
 
   const generator = new Generator('foo');
@@ -57,4 +84,25 @@ test('plugin checks if parameter is function', async (t) => {
   } catch(e) {
     t.equal(e.message, 'Please provide a function as the parameter to `use`.')
   }
+});
+
+test('use adds plugin to the plugin stack', async (t) => {
+  t.plan(2);
+
+  const generator = new Generator('foo');
+
+  const foo = () => {};
+
+  generator.use(foo);
+  t.equal(generator.plugins.length, 1);
+  t.equal(generator.plugins[0].name, 'bound foo');
+});
+
+test('use returns class instance', async (t) => {
+  t.plan(1);
+
+  const generator = new Generator('foo');
+
+  const scope = generator.use(() => {});
+  t.equal(scope, generator);
 });
