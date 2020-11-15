@@ -1,5 +1,5 @@
 import test from 'tape';
-import Generator from './generator';
+import { Generator } from './generator';
 
 test('constructor sets required properties', async (t) => {
   t.plan(3);
@@ -81,7 +81,7 @@ test('use checks if parameter is function', async (t) => {
 
   try {
     generator.use('bar');
-  } catch(e) {
+  } catch (e) {
     t.equal(e.message, 'Please provide a function as the parameter to `use`.')
   }
 });
@@ -91,7 +91,7 @@ test('use adds plugin to the plugin stack', async (t) => {
 
   const generator = new Generator('foo');
 
-  const foo = () => {};
+  const foo = () => { };
 
   generator.use(foo);
   t.equal(generator.plugins.length, 1);
@@ -103,6 +103,15 @@ test('use returns class instance', async (t) => {
 
   const generator = new Generator('foo');
 
-  const scope = generator.use(() => {});
+  const scope = generator.use(() => { });
+  t.equal(scope, generator);
+});
+
+test('build returns class instance', async (t) => {
+  t.plan(1);
+
+  const generator = new Generator('foo');
+  const scope = await generator.build();
+
   t.equal(scope, generator);
 });

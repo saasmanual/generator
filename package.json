@@ -5,7 +5,8 @@
   "main": "bin/cli.js",
   "scripts": {
     "test": "tape --require esm src/**/*.test.js | tap-spec",
-    "coverage": "nyc --all npm run test"
+    "coverage": "nyc npm run test",
+    "coverage:report": "nyc report --reporter=text-summary"
   },
   "repository": {
     "type": "git",
