@@ -6,7 +6,9 @@
   "scripts": {
     "test": "tape --require esm src/**/*.test.js | tap-spec",
     "coverage": "nyc npm run test",
-    "coverage:report": "nyc report --reporter=text-summary"
+    "coverage:report": "nyc report --reporter=text-summary",
+    "release": "npm version patch",
+    "publish:npm": "npm run test && npm run release && npm publish --access public"
   },
   "repository": {
     "type": "git",
