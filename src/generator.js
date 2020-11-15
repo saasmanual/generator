@@ -37,7 +37,7 @@ class Generator {
     if (typeof plugin !== 'function') {
       throw new Error('Please provide a function as the parameter to `use`.');
     }
-    
+
     this.plugins.push(plugin.bind(this));
     return this;
   }
@@ -101,5 +101,5 @@ class Generator {
 }
 
 export {
-  Generator as default
+  Generator
 }
