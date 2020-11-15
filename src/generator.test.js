@@ -110,8 +110,22 @@ test('use returns class instance', async (t) => {
 test('build returns class instance', async (t) => {
   t.plan(1);
 
-  const generator = new Generator('foo');
-  const scope = await generator.build();
+  const generator = new Generator('./example');
+  const scope = await generator
+    .source('')
+    .build();
 
   t.equal(scope, generator);
+});
+
+test('build throws if source directory does not exist', async (t) => {
+  t.plan(1);
+
+  const generator = new Generator('foo');
+
+  try {
+    await generator.build();
+  } catch(e) {
+    t.equal(e.message, 'ENOENT: no such file or directory, scandir \'foo/src\'')
+  }
 });

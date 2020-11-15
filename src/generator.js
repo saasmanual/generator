@@ -16,6 +16,9 @@ class Generator {
     this.dirname = dirname;
     this.plugins = [];
     this.ctx = {};  
+    this._source = join(this.dirname, 'src');
+    this._templates = join(this.dirname, 'templates');
+    this._destination = join(this.dirname, 'out');
   }
 
   source(src = '') {
