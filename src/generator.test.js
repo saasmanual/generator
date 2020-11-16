@@ -129,3 +129,26 @@ test('build throws if source directory does not exist', async (t) => {
     t.equal(e.message, 'ENOENT: no such file or directory, scandir \'foo/src\'')
   }
 });
+
+test('plugins are executed serially', async (t) => {
+  t.plan(2);
+
+  let cnt = 0;
+  const plugin1 = () => {
+    cnt++;
+    t.equal(cnt, 1, 'Plugin 1 called');
+  };
+
+  const plugin2 = () => {
+    cnt++;
+    t.equal(cnt, 2, 'Plugin 2 called');
+  };
+
+  const generator = new Generator('./example');
+
+  await generator
+    .source('')
+    .use(plugin1)
+    .use(plugin2)
+    .build();  
+});
