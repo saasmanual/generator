@@ -1,14 +1,16 @@
 # Welcome to Generator
 
-Generator is a simple site generator which is used for the SaaS Manual website.
+Generator is a simple site generator which is used for [SaaS Manual](https://saasmanual.com).
 
-## Usage
+## Installation
 
 First you need to install the SaaS Manual Generator package:
 
 ```
 npm install @saasmanual/generator
 ```
+
+## Usage
 
 Now you can create a new file, say `blog.js` and invoke the generator:
 
