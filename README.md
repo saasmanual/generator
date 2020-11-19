@@ -2,7 +2,7 @@
 
 Generator is a simple site generator which is used for the SaaS Manual website.
 
-# Usage
+## Usage
 
 First you need to install the SaaS Manual Generator package:
 
@@ -29,4 +29,21 @@ Now you can just run the following command to generate your pages:
 
 ```
 node -r esm blog.js
+```
+
+## Plugins
+
+You can write simple transformers which allows you to generate things like table of contents or anything else really. See the example below:
+
+```
+async function plugin(generator) {
+  // Do stuff here
+}
+
+(new Generator)
+  .source('./content')
+  .destination('./out')
+  .templates('./templates')
+  .use(plugin)
+  .build();
 ```
