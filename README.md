@@ -14,7 +14,7 @@ npm install @saasmanual/generator
 
 Now you can create a new file, say `blog.js` and invoke the generator:
 
-```
+```javascript
 import {Generator} from '../src/generator';
 
 (new Generator)
@@ -37,7 +37,7 @@ node -r esm blog.js
 
 You can write simple transformers which allows you to generate things like table of contents or anything else really. See the example below:
 
-```
+```javascript
 async function plugin(generator) {
   // Do stuff here
 }
