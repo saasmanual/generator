@@ -1,5 +1,4 @@
 async function pageHeaders(generator) {
-  console.log(generator)
   for (const file in generator.ctx) {
     const props = generator.ctx[file];
 
