@@ -85,13 +85,9 @@ class Generator {
   }
 
   async _runPlugins() {
-    // Sorry for the below, there seems no other way to execute async functions serially.
-    // We could add some dependency but this is just the easiest way it appears.
-    // Please only change if you don't exchange for some external dependency.
-    await this.plugins.reduce(async (previousPromise, nextAsyncFunction) => {
-      await previousPromise;
-      await nextAsyncFunction(this);
-    }, Promise.resolve());
+    for( const plugin of this.plugins ) {
+      await plugin(this)
+    }
   }
 
   async build(src) {
