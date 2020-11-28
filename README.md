@@ -1,5 +1,7 @@
 # Welcome to Generator
 
+![Node.js CI](https://github.com/saasmanual/generator/workflows/Node.js%20CI/badge.svg?branch=main)
+
 Generator is a simple site generator which is used for [SaaS Manual](https://saasmanual.com).
 
 ## Installation
