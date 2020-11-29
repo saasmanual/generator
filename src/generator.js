@@ -51,7 +51,7 @@ class Generator {
       throw new Error('Please provide a function as the parameter to `use`.');
     }
 
-    this.remarkPlugins.push(plugin.bind(this));
+    this.remarkPlugins.push(plugin);
     return this;
   }
 
@@ -83,7 +83,7 @@ class Generator {
       const data = merge(props.data, {
         content: rm.use(html).processSync(props.content)
       });
-      
+
       this.ctx[file].html = nunjucks.render(template, data);
     }
     return this;
