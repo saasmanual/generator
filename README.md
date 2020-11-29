@@ -1,5 +1,7 @@
 # Welcome to Generator
 
+![Unit Tests](https://github.com/saasmanual/generator/workflows/Unit%20Tests/badge.svg?branch=main)
+
 Generator is a simple site generator which is used for [SaaS Manual](https://saasmanual.com).
 
 ## Installation
