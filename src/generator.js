@@ -74,15 +74,16 @@ class Generator {
     for (const file in this.ctx) {
       const props = this.ctx[file];
       const template = join(this._templates, props.data.layout || 'layout.njk');
+      
       const rm = remark();
-
-      for (const plugin in this.remarkPlugins) {
+      for (const plugin of this.remarkPlugins) {
         rm.use(plugin);
       }
 
       const data = merge(props.data, {
         content: rm.use(html).processSync(props.content)
       });
+      
       this.ctx[file].html = nunjucks.render(template, data);
     }
     return this;
