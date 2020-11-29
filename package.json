@@ -1,6 +1,6 @@
 {
   "name": "@saasmanual/generator",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Site generator for SaaS Manual",
   "main": "src/generator.js",
   "scripts": {
