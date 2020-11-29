@@ -15,6 +15,7 @@ class Generator {
   constructor(dirname = process.cwd()) {
     this.dirname = dirname;
     this.plugins = [];
+    this.remarkPlugins = [];
     this.ctx = {};  
     this._source = join(this.dirname, 'src');
     this._templates = join(this.dirname, 'templates');
@@ -45,6 +46,15 @@ class Generator {
     return this;
   }
 
+  useRemarkPlugin(plugin) {
+    if (typeof plugin !== 'function') {
+      throw new Error('Please provide a function as the parameter to `use`.');
+    }
+
+    this.remarkPlugins.push(plugin.bind(this));
+    return this;
+  }
+
   async _readFiles() {
     this.files = await readdir(this._source);
   
@@ -64,8 +74,14 @@ class Generator {
     for (const file in this.ctx) {
       const props = this.ctx[file];
       const template = join(this._templates, props.data.layout || 'layout.njk');
+      const rm = remark();
+
+      for (const plugin in this.remarkPlugins) {
+        rm.use(plugin);
+      }
+
       const data = merge(props.data, {
-        content: remark().use(html).processSync(props.content)
+        content: rm.use(html).processSync(props.content)
       });
       this.ctx[file].html = nunjucks.render(template, data);
     }
