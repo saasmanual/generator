@@ -65,6 +65,9 @@ class Generator {
     for (const file of markdownFiles) {
       const content = readFileSync(file, 'utf-8');
       const data = matter(content);
+      
+      if (data.draft && process.env.NODE_ENV === 'production') continue;
+      
       const fileName = relative(this._source, file);
       this.ctx[fileName] = data;
     }
