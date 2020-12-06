@@ -152,3 +152,37 @@ test('plugins are executed serially', async (t) => {
     .use(plugin2)
     .build();  
 });
+
+test('drafts are included when NODE_ENV is not production', async (t) => {
+  t.plan(1);
+
+  const env = process.env.NODE_ENV;
+  process.env.NODE_ENV = 'production';
+  
+  const generator = new Generator('./example');
+
+  await generator
+    .source('')
+    .build();  
+
+  t.equal(generator.ctx['content/draft.md'], undefined);
+
+  process.env.NODE_ENV = env;
+});
+
+test('drafts are included when NODE_ENV is not production', async (t) => {
+  t.plan(1);
+
+  const env = process.env.NODE_ENV;
+  process.env.NODE_ENV = 'dev';
+  
+  const generator = new Generator('./example');
+
+  await generator
+    .source('')
+    .build();  
+
+  t.ok(generator.ctx['content/draft.md']);
+
+  process.env.NODE_ENV = env;
+});
