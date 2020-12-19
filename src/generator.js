@@ -74,17 +74,22 @@ class Generator {
   }
 
   async _compileFiles() {
+    const rm = remark();
+    rm.use(html);
+
+    for (const plugin of this.remarkPlugins) {
+      const pluginProps = plugin(this.ctx);
+      const func = pluginProps.plugin ? pluginProps.plugin : pluginProps;
+      const props = pluginProps.props ? pluginProps.props : {};
+      rm.use(func, props);
+    }
+
     for (const file in this.ctx) {
       const props = this.ctx[file];
       const template = join(this._templates, props.data.layout || 'layout.njk');
       
-      const rm = remark();
-      for (const plugin of this.remarkPlugins) {
-        rm.use(plugin);
-      }
-
       const data = merge(props.data, {
-        content: rm.use(html).processSync(props.content)
+        content: rm.processSync(props.content)
       });
 
       this.ctx[file].html = nunjucks.render(template, data);
