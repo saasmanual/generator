@@ -6,6 +6,7 @@ import readdir from 'recursive-readdir';
 import nunjucks from 'nunjucks';
 import remark from 'remark';
 import html from 'remark-html';
+import vfile from 'vfile';
 
 function renameFromMdToHtml(file) {
   return `${basename(file, '.md')}.html`;
@@ -89,7 +90,12 @@ class Generator {
       const template = join(this._templates, props.data.layout || 'layout.njk');
       
       const data = merge(props.data, {
-        content: rm.processSync(props.content)
+        content: rm.processSync(vfile({
+          contents: props.content,
+          path: file,
+          basename: basename(file),
+          dirname: dirname(file)
+        }))
       });
 
       this.ctx[file].html = nunjucks.render(template, data);
